@@ -9,8 +9,9 @@ import {
   updateEmail,
   updateProfile,
 } from "firebase/auth";
-import auth from "../firebase/firebase.config";
+import auth from "../Firebase/firebase.config";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
