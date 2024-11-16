@@ -19,7 +19,6 @@ const Nav = ({ user, onLogout }) => {
           </Link>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
           <Link to="/" className="hover:text-crimson-red">
             Home
@@ -53,7 +52,6 @@ const Nav = ({ user, onLogout }) => {
           )}
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -76,7 +74,6 @@ const Nav = ({ user, onLogout }) => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-deep-navy-blue text-soft-beige">
           <Link
