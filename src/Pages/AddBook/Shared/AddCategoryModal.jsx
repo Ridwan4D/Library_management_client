@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const AddCategoryModal = ({ isOpen, onClose }) => {
   const axiosPublic = useAxiosPublic();
   const { categories,refetch } = useCategories();
-  console.log(categories);
+  // console.log(categories);
 
   const {
     register,

@@ -94,29 +94,29 @@ const AddBook = () => {
   const handleCloseModal = () => setIsModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-2 pb-8 px-4 mx-auto max-w-6xl">
+    <div className="min-h-screen bg-gray-50 pt-2 pb-8 px-1 mx-auto max-w-6xl">
       <div className="flex justify-between items-center my-5 bg-gray-200 px-5 py-2">
-        <h3 className="text-3xl">Add New Category</h3>
-        <button className="text-3xl" onClick={handleOpenModal}>
+        <h3 className="font-medium md:text-xl lg:text-3xl">Add New Category</h3>
+        <button className="text-xl md:text-3xl" onClick={handleOpenModal}>
           <MdAddCard />
         </button>
       </div>
-      <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">
+      <h2 className="mb-8 text-2xl lg:text-4xl font-bold text-center text-gray-800">
         Add a New Book
       </h2>
-      <div className="bg-white p-8 rounded-md shadow-lg">
-        <form onSubmit={handleSubmit(handleAddBook)} className="space-y-6">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="bg-white p-2 lg:p-8 rounded-md shadow-lg">
+        <form onSubmit={handleSubmit(handleAddBook)} className="space-y-3 lg:space-y-6">
+          <div className="grid grid-cols-1 gap-2 md:gap-4 lg:gap-6 md:grid-cols-2">
             {/* Image Input */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Image Upload
               </label>
               <input
                 type="file"
                 id="image-input"
                 onChange={handleImageUpload}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
               />
               {imagePreview && (
                 <div className="mt-4 relative">
@@ -141,13 +141,13 @@ const AddBook = () => {
 
             {/* Book Name */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Book Name
               </label>
               <input
                 type="text"
                 {...register("book", { required: "This field is required" })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter Book Name"
               />
               {errors.book && (
@@ -157,7 +157,7 @@ const AddBook = () => {
 
             {/* Quantity */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Quantity
               </label>
               <input
@@ -165,7 +165,7 @@ const AddBook = () => {
                 {...register("quantity", {
                   required: "This field is required",
                 })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
                 placeholder="Number of Books"
               />
               {errors.quantity && (
@@ -177,13 +177,13 @@ const AddBook = () => {
 
             {/* Author */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Author
               </label>
               <input
                 type="text"
                 {...register("author", { required: "This field is required" })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
                 placeholder="Author Name"
               />
               {errors.author && (
@@ -193,14 +193,14 @@ const AddBook = () => {
 
             {/* Category */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Category
               </label>
               <select
                 {...register("bookCategory", {
                   required: "Please select a category",
                 })}
-                className={`w-full p-3 mt-2 border rounded-md focus:ring-2 focus:ring-indigo-500 ${
+                className={`w-full p-3 mt-1 border rounded-md focus:ring-2 focus:ring-indigo-500 ${
                   errors.bookCategory ? "border-red-600" : "border-gray-300"
                 }`}
               >
@@ -223,13 +223,13 @@ const AddBook = () => {
             </div>
             {/* Rating */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Rating (1-5)
               </label>
               <input
                 type="text"
                 {...register("rating", { required: "This field is required" })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
                 placeholder="Rating (1-5)"
               />
               {errors.rating && (
@@ -239,7 +239,7 @@ const AddBook = () => {
 
             {/* Description */}
             <div className="sm:col-span-2">
-              <label className="block text-lg font-semibold text-gray-700">
+              <label className="block text-sm md:text-lg font-semibold text-gray-700">
                 Description
               </label>
               <textarea
@@ -247,7 +247,7 @@ const AddBook = () => {
                 {...register("bookDescription", {
                   required: "This field is required",
                 })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-1 md:p-3 mt-1 border border-gray-300 rounded-sm md:rounded-md focus:ring-2 focus:ring-indigo-500"
                 placeholder="Write Book Description"
               />
               {errors.bookDescription && (
