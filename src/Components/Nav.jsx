@@ -59,7 +59,9 @@ const Nav = () => {
       </div>
       <div className="navbar-center">
         <h2 className="text-2xl font-semibold text-teal-600">
-          L<sub className="text-sm">ibrary</sub> M<sub className="text-sm">anagement</sub> S<sub className="text-sm">ystem</sub>
+          L<sub className="text-sm">ibrary</sub> M
+          <sub className="text-sm">anagement</sub> S
+          <sub className="text-sm">ystem</sub>
         </h2>
       </div>
 
@@ -71,17 +73,12 @@ const Nav = () => {
         {user ? (
           <div className="avatar">
             <span className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring ring-offset-2">
-              <img
-                src={
-                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                }
-                alt="User Avatar"
-              />
+              <img src={user.photoURL} alt="User Avatar" />
             </span>
           </div>
         ) : (
           <NavLink
-            to="/login"
+            to="/register"
             className="btn bg-slate-200 py-2 px-5 text-gray-500 font-semibold"
           >
             Login
