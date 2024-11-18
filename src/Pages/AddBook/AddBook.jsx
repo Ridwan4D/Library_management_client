@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import { TiDelete } from "react-icons/ti";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import axios from "axios";
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -32,7 +33,7 @@ const AddBook = () => {
       formData.append("upload_preset", uploadPreset);
 
       try {
-        const response = await axiosPublic.post(
+        const response = await axios.post(
           `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
           formData
         );
@@ -46,8 +47,8 @@ const AddBook = () => {
 
   const handleDeleteImage = () => {
     setImagePreview(null);
-    setImageUrl(""); // Clear the image URL
-    document.getElementById("image-input").value = ""; // Clear the input field
+    setImageUrl("");
+    document.getElementById("image-input").value = "";
   };
 
   const handleAddBook = async (data) => {
@@ -60,7 +61,7 @@ const AddBook = () => {
     }
 
     const bookInfo = {
-      image: imageUrl, // Using the Cloudinary image URL
+      image: imageUrl,
       book,
       bookDescription,
       quantity,
@@ -71,15 +72,19 @@ const AddBook = () => {
     };
 
     console.log(bookInfo);
-    // try {
-    //   const response = await axiosPublic.post("/addBooks", bookInfo);
-    //   toast.success("Book Added Successfully!");
-    //   setTimeout(() => {
-    //     navigate("/allBooks");
-    //   }, 1000);
-    // } catch (error) {
-    //   toast.error("Something went wrong, please try again.");
-    // }
+    axiosPublic
+      .post("/books", bookInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Book Added Successfully!");
+          setTimeout(() => {
+            // navigate("/allBooks");
+          }, 1000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -106,12 +111,12 @@ const AddBook = () => {
                   <img
                     src={imagePreview}
                     alt="Image preview"
-                    className="w-20 rounded-md"
+                    className="w-32 max-h-32 rounded-md"
                   />
                   <button
                     type="button"
                     onClick={handleDeleteImage}
-                    className="absolute top-0 right-0 bg-red-500 text-white p-1 text-xs rounded-full"
+                    className="absolute top-0 left-0 text-white text-sm rounded-full"
                   >
                     <TiDelete />
                   </button>

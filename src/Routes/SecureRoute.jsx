@@ -4,10 +4,10 @@ import useAuth from "../Hooks/useAuth";
 
 
 const SecureRoute = ({ children }) => {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center text-4xl">
         <span className="loading loading-infinity loading-lg"></span>
