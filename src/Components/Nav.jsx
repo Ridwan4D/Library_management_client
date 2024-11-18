@@ -2,7 +2,15 @@ import { NavLink } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 
 const Nav = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const navLinks = (
     <>
@@ -71,10 +79,25 @@ const Nav = () => {
         </ul>
         {/* Conditional Avatar or Login Button */}
         {user ? (
-          <div className="avatar">
-            <span className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring ring-offset-2">
-              <img src={user.photoURL} alt="User Avatar" />
-            </span>
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="avatar cursor-pointer">
+              <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={user.photoURL} alt="User Avatar" />
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40"
+            >
+              <li>
+                <button
+                  className="text-left text-red-500 font-semibold"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
           </div>
         ) : (
           <NavLink
