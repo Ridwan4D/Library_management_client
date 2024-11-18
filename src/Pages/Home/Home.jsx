@@ -1,5 +1,6 @@
 import FluentlyAskQuestion from "./Shared/FluentlyAskQuestion";
 import Slider from "./Shared/Slider";
+import Testimonial from "./Shared/Testimonial";
 
 const Home = () => {
   return (
@@ -7,6 +8,9 @@ const Home = () => {
       {/*Slider section  */}
       <section className="px-2">
         <Slider />
+      </section>
+      <section className="px-2">
+        <Testimonial />
       </section>
       <section>
         <FluentlyAskQuestion />
