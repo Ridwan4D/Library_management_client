@@ -1,13 +1,33 @@
 import { useState } from "react";
 import useBooks from "../../Hooks/useBooks";
+import useCategories from "../../Hooks/useCategories";
+import BookCard from "../../Components/BookCard ";
 
 const AllBooks = () => {
   const { books } = useBooks();
+  const { categories } = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [showAvailableOnly, setShowAvailableOnly] = useState(false);
 
   const handleFilterToggle = () => {
     setFilterOpen(!filterOpen);
   };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  const handleAvailabilityChange = () => {
+    setShowAvailableOnly(!showAvailableOnly);
+  };
+
+  const filteredBooks = books.filter((book) => {
+    const isCategoryMatch =
+    !selectedCategory || book.bookCategory === selectedCategory;
+    const isAvailable = !showAvailableOnly || book.quantity > 0;
+    return isCategoryMatch && isAvailable;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -24,24 +44,13 @@ const AllBooks = () => {
 
       {/* Books Section */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {/* Example Book Card */}
-        {[...Array(8)].map((_, idx) => (
-          <div
-            key={idx}
-            className="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition-shadow"
-          >
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Book Cover"
-              className="w-full h-40 object-cover rounded-md mb-4"
-            />
-            <h3 className="text-lg font-semibold text-gray-800">
-              Book Title {idx + 1}
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">Author Name</p>
-            <p className="text-sm text-gray-500 mt-2">Category</p>
-          </div>
-        ))}
+        {filteredBooks && filteredBooks.length > 0 ? (
+          filteredBooks.map((book, idx) => <BookCard key={idx} book={book} />)
+        ) : (
+          <p className="text-center text-gray-500 col-span-full">
+            No books available.
+          </p>
+        )}
       </div>
 
       {/* Filter Modal */}
@@ -53,6 +62,7 @@ const AllBooks = () => {
             </h3>
             {/* Filter Options */}
             <form className="space-y-4">
+              {/* Category Filter */}
               <div>
                 <label
                   htmlFor="category"
@@ -63,13 +73,34 @@ const AllBooks = () => {
                 <select
                   id="category"
                   className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
                 >
                   <option value="">All Categories</option>
-                  <option value="fiction">Fiction</option>
-                  <option value="non-fiction">Non-Fiction</option>
-                  <option value="mystery">Mystery</option>
-                  <option value="fantasy">Fantasy</option>
+                  {categories &&
+                    categories.map((category, idx) => (
+                      <option key={idx} value={category.category} className="uppercase">
+                        {category.category}
+                      </option>
+                    ))}
                 </select>
+              </div>
+
+              {/* Availability Filter */}
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="availability"
+                  checked={showAvailableOnly}
+                  onChange={handleAvailabilityChange}
+                  className="h-4 w-4 text-indigo-600 rounded"
+                />
+                <label
+                  htmlFor="availability"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Show Available Only
+                </label>
               </div>
 
               <button
