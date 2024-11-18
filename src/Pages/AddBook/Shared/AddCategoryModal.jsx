@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { MdClose } from "react-icons/md";
+import useCategories from "../../../Hooks/useCategories";
 
 const AddCategoryModal = ({ isOpen, onClose }) => {
-  const categories = [
-    { id: 1, name: "Thriller" },
-    { id: 2, name: "History" },
-  ];
+  const categories = useCategories();
+
   const {
     register,
     handleSubmit,
