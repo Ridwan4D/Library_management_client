@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const AddCategoryModal = ({ isOpen, onClose }) => {
   const axiosPublic = useAxiosPublic();
-  const { categories } = useCategories();
+  const { categories,refetch } = useCategories();
   console.log(categories);
 
   const {
@@ -27,6 +27,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Category added");
+          refetch();
           reset();
         }
       })
@@ -51,7 +52,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
           <div className="flex-1 p-4 bg-gray-100">
             <h3 className="text-lg font-semibold mb-4">Added Categories</h3>
             <ul className="space-y-2">
-              {categories.map((category,idx) => (
+              {categories.map((category, idx) => (
                 <li
                   key={idx}
                   className="px-4 py-2 bg-gray-200 rounded-md shadow-sm uppercase"

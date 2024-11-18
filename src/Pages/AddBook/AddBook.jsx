@@ -8,11 +8,13 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import axios from "axios";
 import { MdAddCard } from "react-icons/md";
 import AddCategoryModal from "./Shared/AddCategoryModal";
+import useCategories from "../../Hooks/useCategories";
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
 
 const AddBook = () => {
+  const { categories } = useCategories();
   const { user } = useAuth();
   const { email } = user;
   const navigate = useNavigate();
@@ -196,19 +198,22 @@ const AddBook = () => {
               </label>
               <select
                 {...register("bookCategory", {
-                  required: "This field is required",
+                  required: "Please select a category",
                 })}
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                className={`w-full p-3 mt-2 border rounded-md focus:ring-2 focus:ring-indigo-500 ${
+                  errors.bookCategory ? "border-red-600" : "border-gray-300"
+                }`}
               >
-                <option value="" disabled>
-                  Select Category
-                </option>
-                <option value="Thriller">Thriller</option>
-                <option value="History">History</option>
-                <option value="Drama">Drama</option>
-                <option value="Novel">Novel</option>
-                <option value="Fiction">Fiction</option>
-                <option value="Other">Other</option>
+                <option value="">Select Category</option>
+                {categories.map((category, idx) => (
+                  <option
+                    key={idx}
+                    value={category.category}
+                    className="uppercase"
+                  >
+                    {category.category}
+                  </option>
+                ))}
               </select>
               {errors.bookCategory && (
                 <p className="text-sm text-red-600">
@@ -216,7 +221,6 @@ const AddBook = () => {
                 </p>
               )}
             </div>
-
             {/* Rating */}
             <div>
               <label className="block text-lg font-semibold text-gray-700">
