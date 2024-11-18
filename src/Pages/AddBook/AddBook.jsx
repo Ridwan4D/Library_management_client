@@ -6,6 +6,8 @@ import useAuth from "../../Hooks/useAuth";
 import { TiDelete } from "react-icons/ti";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import axios from "axios";
+import { MdAddCard } from "react-icons/md";
+import AddCategoryModal from "./Shared/AddCategoryModal";
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -15,7 +17,7 @@ const AddBook = () => {
   const { email } = user;
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -40,7 +42,7 @@ const AddBook = () => {
         setImageUrl(response.data.secure_url);
         setImagePreview(response.data.secure_url);
       } catch (error) {
-        toast.error("Image upload failed. Please try again.");
+        toast.error("Image upload failed. Please try again.", error);
       }
     }
   };
@@ -78,7 +80,7 @@ const AddBook = () => {
         if (res.data.insertedId) {
           toast.success("Book Added Successfully!");
           setTimeout(() => {
-            // navigate("/allBooks");
+            navigate("/allBooks");
           }, 1000);
         }
       })
@@ -86,9 +88,17 @@ const AddBook = () => {
         console.log(error);
       });
   };
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 mx-auto max-w-6xl">
+    <div className="min-h-screen bg-gray-50 pt-2 pb-8 px-4 mx-auto max-w-6xl">
+      <div className="flex justify-between items-center my-5 bg-gray-200 px-5 py-2">
+        <h3 className="text-3xl">Add New Category</h3>
+        <button className="text-3xl" onClick={handleOpenModal}>
+          <MdAddCard />
+        </button>
+      </div>
       <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">
         Add a New Book
       </h2>
@@ -253,6 +263,7 @@ const AddBook = () => {
         </form>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
+      <AddCategoryModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
