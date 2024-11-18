@@ -11,7 +11,7 @@ const Login = () => {
   const { signInUser } = useAuth();
   const navigate = useNavigate();
   const [loginErr, setLoginErr] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
