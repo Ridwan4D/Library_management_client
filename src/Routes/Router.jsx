@@ -7,6 +7,7 @@ import Login from "../Pages/Login/Login";
 import AddBook from "../Pages/AddBook/AddBook";
 import SecureRoute from "./SecureRoute";
 import AllBooks from "../Pages/AllBooks/AllBooks";
+import UpdateBook from "../Pages/UpdateBook/UpdateBook";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <SecureRoute>
             <AllBooks />
+          </SecureRoute>
+        ),
+      },
+      {
+        path: "/updateBook/:id",
+        element: (
+          <SecureRoute>
+            <UpdateBook />
           </SecureRoute>
         ),
       },

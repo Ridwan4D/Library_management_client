@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import useAuth from "../Hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const { user } = useAuth();
@@ -27,9 +28,12 @@ const BookCard = ({ book }) => {
       {/* Buttons Section */}
       <div className="mt-4 flex justify-between gap-2">
         {theUser && (
-          <button className="px-4 py-2 text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-700 focus:outline-none transition-colors">
+          <Link
+            to={`/updateBook/${book?._id}`}
+            className="px-4 py-2 text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-700 focus:outline-none transition-colors"
+          >
             Update
-          </button>
+          </Link>
         )}
         <button className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-700 focus:outline-none transition-colors">
           Details
