@@ -10,7 +10,7 @@ const useCategories = () => {
       return result.data;
     },
   });
-  return [categories, refetch];
+  return { categories, refetch };
 };
 
 export default useCategories;

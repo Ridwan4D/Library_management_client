@@ -2,19 +2,37 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { MdClose } from "react-icons/md";
 import useCategories from "../../../Hooks/useCategories";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const AddCategoryModal = ({ isOpen, onClose }) => {
-  const categories = useCategories();
+  const axiosPublic = useAxiosPublic();
+  const { categories } = useCategories();
+  console.log(categories);
 
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm();
 
   const handleAddCategory = (data) => {
-    console.log(data);
+    const categoryInfo = {
+      category: data.category.toLowerCase(),
+    };
+    console.log(categoryInfo);
+    axiosPublic
+      .post("/categories", categoryInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Category added");
+          reset();
+        }
+      })
+      .catch((err) => {
+        console.log(`err=> ${err}`);
+      });
   };
 
   if (!isOpen) return null;
@@ -33,12 +51,12 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
           <div className="flex-1 p-4 bg-gray-100">
             <h3 className="text-lg font-semibold mb-4">Added Categories</h3>
             <ul className="space-y-2">
-              {categories.map((category) => (
+              {categories.map((category,idx) => (
                 <li
-                  key={category.id}
-                  className="px-4 py-2 bg-gray-200 rounded-md shadow-sm"
+                  key={idx}
+                  className="px-4 py-2 bg-gray-200 rounded-md shadow-sm uppercase"
                 >
-                  {category.name}
+                  {category.category}
                 </li>
               ))}
             </ul>
@@ -54,7 +72,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
               <div>
                 <input
                   type="text"
-                  {...register("categoryName", {
+                  {...register("category", {
                     required: "Category name is required",
                     minLength: {
                       value: 2,
