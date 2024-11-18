@@ -21,7 +21,7 @@ const Nav = () => {
         <NavLink to="/addBook">Add Book</NavLink>
       </li>
       <li>
-        <NavLink to="/allBook">All Book</NavLink>
+        <NavLink to="/allBooks">All Book</NavLink>
       </li>
       <li>
         <NavLink to="/borrowedBook">Borrowed Book</NavLink>

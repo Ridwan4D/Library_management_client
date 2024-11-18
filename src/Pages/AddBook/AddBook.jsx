@@ -83,9 +83,9 @@ const AddBook = () => {
         if (res.data.insertedId) {
           toast.success("Book Added Successfully!");
           reset();
-          handleDeleteImage()
+          handleDeleteImage();
           setTimeout(() => {
-            // navigate("/allBooks");
+            navigate("/allBooks");
           }, 1000);
         }
       })
@@ -108,7 +108,10 @@ const AddBook = () => {
         Add a New Book
       </h2>
       <div className="bg-gray-50 p-2 lg:p-8 rounded-md shadow-lg">
-        <form onSubmit={handleSubmit(handleAddBook)} className="space-y-3 lg:space-y-6">
+        <form
+          onSubmit={handleSubmit(handleAddBook)}
+          className="space-y-3 lg:space-y-6"
+        >
           <div className="grid grid-cols-1 gap-2 md:gap-4 lg:gap-6 md:grid-cols-2">
             {/* Image Input */}
             <div>
