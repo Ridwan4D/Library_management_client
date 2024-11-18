@@ -26,6 +26,7 @@ const AddBook = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -81,8 +82,10 @@ const AddBook = () => {
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Book Added Successfully!");
+          reset();
+          handleDeleteImage()
           setTimeout(() => {
-            navigate("/allBooks");
+            // navigate("/allBooks");
           }, 1000);
         }
       })
@@ -94,8 +97,8 @@ const AddBook = () => {
   const handleCloseModal = () => setIsModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-2 pb-8 px-1 mx-auto max-w-6xl">
-      <div className="flex justify-between items-center my-5 bg-gray-200 px-5 py-2">
+    <div className=" px-1 mx-auto max-w-6xl">
+      <div className="flex justify-between items-center bg-gray-200 px-5 py-4 mt-1">
         <h3 className="font-medium md:text-xl lg:text-3xl">Add New Category</h3>
         <button className="text-xl md:text-3xl" onClick={handleOpenModal}>
           <MdAddCard />
@@ -104,7 +107,7 @@ const AddBook = () => {
       <h2 className="mb-8 text-2xl lg:text-4xl font-bold text-center text-gray-800">
         Add a New Book
       </h2>
-      <div className="bg-white p-2 lg:p-8 rounded-md shadow-lg">
+      <div className="bg-gray-50 p-2 lg:p-8 rounded-md shadow-lg">
         <form onSubmit={handleSubmit(handleAddBook)} className="space-y-3 lg:space-y-6">
           <div className="grid grid-cols-1 gap-2 md:gap-4 lg:gap-6 md:grid-cols-2">
             {/* Image Input */}
