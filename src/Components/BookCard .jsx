@@ -5,6 +5,28 @@ import { Link } from "react-router-dom";
 const BookCard = ({ book }) => {
   const { user } = useAuth();
   const theUser = book?.email === user?.email;
+
+  // Function to generate the star rating
+  const renderStars = (rating) => {
+    const totalStars = 5; // Total number of stars to show
+    const filledStars = Math.floor(rating); // Number of filled stars
+    const emptyStars = totalStars - filledStars; // Remaining empty stars
+
+    let stars = [];
+
+    // Push filled stars
+    for (let i = 0; i < filledStars; i++) {
+      stars.push("★"); // Filled star
+    }
+
+    // Push empty stars
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push("☆"); // Empty star
+    }
+
+    return stars.join(" "); // Return stars as a string
+  };
+
   return (
     <div className="p-4 bg-white rounded-md shadow-md hover:shadow-xl transition-all transform hover:scale-105">
       {/* Book Image */}
@@ -24,6 +46,11 @@ const BookCard = ({ book }) => {
       <p className="text-sm text-gray-500 mt-1 uppercase">
         {book?.bookCategory}
       </p>
+
+      {/* Book Rating */}
+      <div className="mt-2 text-yellow-500 text-2xl"> {/* Increase star size here */}
+        {book?.rating ? renderStars(book?.rating) : "No rating available"}
+      </div>
 
       {/* Buttons Section */}
       <div className="mt-4 flex justify-between gap-2">
