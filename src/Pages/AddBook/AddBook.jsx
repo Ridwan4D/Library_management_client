@@ -76,7 +76,7 @@ const AddBook = () => {
       email,
     };
 
-    console.log(bookInfo);
+    // console.log(bookInfo);
     axiosPublic
       .post("/books", bookInfo)
       .then((res) => {
