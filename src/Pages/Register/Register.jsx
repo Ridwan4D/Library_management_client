@@ -69,7 +69,7 @@ const Register = () => {
   return (
     <div>
       <Helmet>
-        <title>Register | Reez Tour Guide</title>
+      <title>Register | Library Management System</title>
       </Helmet>
       <div className="flex h-screen flex-row-reverse">
         {/* Left Pane */}
