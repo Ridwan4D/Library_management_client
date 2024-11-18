@@ -1,14 +1,19 @@
 import { useState } from "react";
 import useBooks from "../../Hooks/useBooks";
 import useCategories from "../../Hooks/useCategories";
+import useAuth from "../../Hooks/useAuth";
 import BookCard from "../../Components/BookCard ";
+import BookTable from "../../Components/BookTable";
 
 const AllBooks = () => {
+  const { user } = useAuth();
   const { books } = useBooks();
   const { categories } = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+  const [viewMode, setViewMode] = useState("card"); // "card" or "table"
+  const userMail = books.find((book) => book.email === user.email);
 
   const handleFilterToggle = () => {
     setFilterOpen(!filterOpen);
@@ -24,7 +29,7 @@ const AllBooks = () => {
 
   const filteredBooks = books.filter((book) => {
     const isCategoryMatch =
-    !selectedCategory || book.bookCategory === selectedCategory;
+      !selectedCategory || book.bookCategory === selectedCategory;
     const isAvailable = !showAvailableOnly || book.quantity > 0;
     return isCategoryMatch && isAvailable;
   });
@@ -34,24 +39,86 @@ const AllBooks = () => {
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">All Books</h1>
-        <button
-          onClick={handleFilterToggle}
-          className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-600"
-        >
-          Filter Books
-        </button>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => setViewMode("card")}
+            className={`px-4 py-2 text-sm font-semibold text-white rounded-md shadow ${
+              viewMode === "card" ? "bg-indigo-700" : "bg-indigo-600"
+            } hover:bg-indigo-500`}
+          >
+            Card View
+          </button>
+          <button
+            onClick={() => setViewMode("table")}
+            className={`px-4 py-2 text-sm font-semibold text-white rounded-md shadow ${
+              viewMode === "table" ? "bg-indigo-700" : "bg-indigo-600"
+            } hover:bg-indigo-500`}
+          >
+            Table View
+          </button>
+          <button
+            onClick={handleFilterToggle}
+            className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-500 focus:outline-none"
+          >
+            Filter Books
+          </button>
+        </div>
       </div>
 
       {/* Books Section */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {filteredBooks && filteredBooks.length > 0 ? (
-          filteredBooks.map((book, idx) => <BookCard key={idx} book={book} />)
-        ) : (
-          <p className="text-center text-gray-500 col-span-full">
-            No books available.
-          </p>
-        )}
-      </div>
+      {viewMode === "card" ? (
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {filteredBooks && filteredBooks.length > 0 ? (
+            filteredBooks.map((book, idx) => <BookCard key={idx} book={book} />)
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">
+              No books available.
+            </p>
+          )}
+        </div>
+      ) : (
+        <section className="container px-4 mx-auto">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Image
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Author
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Category
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Ratings
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Quantity
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Details
+                  </th>
+                  {user?.email === userMail?.email && (
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      Action
+                    </th>
+                  )}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {filteredBooks.map((book, idx) => (
+                  <BookTable key={idx} book={book} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       {/* Filter Modal */}
       {filterOpen && (
@@ -79,7 +146,7 @@ const AllBooks = () => {
                   <option value="">All Categories</option>
                   {categories &&
                     categories.map((category, idx) => (
-                      <option key={idx} value={category.category} className="uppercase">
+                      <option key={idx} value={category.category}>
                         {category.category}
                       </option>
                     ))}
