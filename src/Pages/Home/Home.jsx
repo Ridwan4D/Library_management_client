@@ -1,3 +1,4 @@
+import FluentlyAskQuestion from "./Shared/FluentlyAskQuestion";
 import Slider from "./Shared/Slider";
 
 const Home = () => {
@@ -6,6 +7,9 @@ const Home = () => {
       {/*Slider section  */}
       <section className="px-2">
         <Slider />
+      </section>
+      <section>
+        <FluentlyAskQuestion />
       </section>
     </div>
   );
