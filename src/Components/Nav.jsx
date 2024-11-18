@@ -31,7 +31,7 @@ const Nav = () => {
 
   return (
     <div className="navbar sticky bg-[#f7f7f9] shadow-lg" id="nav">
-      <div className="navbar-start">
+      <div className="navbar-start w-full lg:w-1/4">
         {/* Mobile Dropdown */}
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,7 +66,7 @@ const Nav = () => {
         </a>
       </div>
       <div className="navbar-center">
-        <h2 className="text-2xl font-semibold text-teal-600">
+        <h2 className="text-lg: md:text-2xl font-semibold text-teal-600">
           L<sub className="text-sm">ibrary</sub> M
           <sub className="text-sm">anagement</sub> S
           <sub className="text-sm">ystem</sub>
