@@ -3,11 +3,14 @@ import useBooks from "../../Hooks/useBooks";
 import useAuth from "../../Hooks/useAuth";
 import { useEffect, useState } from "react";
 import BorrowModal from "../../Components/BorrowModal";
+import useBorrowBook from "../../Hooks/useBorrowBook";
+import toast from "react-hot-toast";
 
 const BookDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const { books } = useBooks();
+  const { theUserBorrowBooks } = useBorrowBook();
   const [disable, setDisable] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,6 +25,29 @@ const BookDetails = () => {
       setDisable(false); // Enable borrow button if quantity is available
     }
   }, [book]);
+
+  // Handle borrowing logic and toast message
+  const handleBorrowClick = () => {
+    // Check if the user has already borrowed the book
+    if (
+      theUserBorrowBooks.some(
+        (borrowedBook) => borrowedBook.mainBookId === book?._id
+      )
+    ) {
+      toast.error("You have already borrowed this book.");
+      setDisable(true); // Disable the borrow button if the user already borrowed the book
+      return;
+    }
+
+    // Check if the user has borrowed 3 books
+    if (theUserBorrowBooks.length >= 3) {
+      toast.error("Maximum 3 books are borrowable.");
+      setDisable(true); // Disable the borrow button if the maximum limit is reached
+      return;
+    }
+
+    setIsModalOpen(true);
+  };
 
   // If book not found, show a message
   if (!book) {
@@ -85,7 +111,7 @@ const BookDetails = () => {
               )}
               {user?.email !== book?.email && (
                 <button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={handleBorrowClick}
                   className={`px-4 py-2 rounded-md shadow focus:outline-none ${
                     disable
                       ? "bg-gray-400 cursor-not-allowed"
