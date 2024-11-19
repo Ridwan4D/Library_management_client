@@ -1,6 +1,17 @@
 import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
+import useCategories from "../Hooks/useCategories";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Footer = () => {
+  const { categories } = useCategories();
+  const [showAll, setShowAll] = useState(false);
+
+  // Toggle to show all categories
+  const handleShowMore = () => {
+    setShowAll(!showAll);
+  };
+
   return (
     <div className="bg-gray-900">
       <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -11,40 +22,33 @@ const Footer = () => {
                 Category
               </p>
               <ul className="mt-2 space-y-2">
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    News
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    World
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Games
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    References
-                  </a>
-                </li>
+                {/* Display only 4 categories initially */}
+                {categories
+                  .slice(0, showAll ? categories.length : 4)
+                  .map((cat, idx) => (
+                    <li key={idx}>
+                      <Link
+                        to={`/category/${cat?.category}`}
+                        className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200 uppercase"
+                      >
+                        {cat?.category}
+                      </Link>
+                    </li>
+                  ))}
               </ul>
+
+              {/* Show More Button */}
+              {categories.length > 4 && (
+                <button
+                  onClick={handleShowMore}
+                  className="mt-2 text-teal-500 hover:text-teal-700 transition-colors duration-300"
+                >
+                  {showAll ? "Show Less" : "Show More"}
+                </button>
+              )}
             </div>
+
+            {/* Other sections */}
             <div>
               <p className="font-medium tracking-wide text-gray-300">Apples</p>
               <ul className="mt-2 space-y-2">
@@ -175,6 +179,7 @@ const Footer = () => {
               </ul>
             </div>
           </div>
+
           <div className="md:max-w-md lg:col-span-2">
             <span className="text-base font-medium tracking-wide text-gray-300">
               Subscribe for updates
@@ -199,6 +204,7 @@ const Footer = () => {
             </p>
           </div>
         </div>
+
         <div className="flex flex-col justify-between pt-5 pb-10 border-t border-gray-800 sm:flex-row">
           <p className="text-sm text-gray-500">
             © Copyright 2024 Book Site. All rights reserved.

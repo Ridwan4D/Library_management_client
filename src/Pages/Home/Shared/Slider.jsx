@@ -3,6 +3,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const Slider = () => {
   // Array with real book information
@@ -69,7 +70,7 @@ const Slider = () => {
       }}
       loop={true}
       modules={[Autoplay, Pagination, Navigation]}
-      className="mySwiper"
+      className="mySwiper z-10"
     >
       {books.map((book) => (
         <SwiperSlide key={book.id}>
@@ -91,9 +92,11 @@ const Slider = () => {
               <p className="mt-2 text-gray-600">By {book.author}</p>
               <p className="mt-1 text-gray-500 italic">Genre: {book.genre}</p>
               <p className="mt-4 text-gray-500">{book.description}</p>
-              <button className="mt-4 px-6 py-2 text-white bg-teal-500 rounded-full hover:bg-teal-700 transition-colors duration-300">
+              <Link
+              to="/allBooks"
+              className="btn mt-4 px-6 py-2 text-white bg-teal-500 rounded-full hover:bg-teal-700 transition-colors duration-300">
                 See More
-              </button>
+              </Link>
             </div>
           </div>
         </SwiperSlide>

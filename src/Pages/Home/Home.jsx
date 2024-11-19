@@ -5,7 +5,7 @@ import Testimonial from "./Shared/Testimonial";
 
 const Home = () => {
   return (
-    <div className="space-y-10 mt-10">
+    <div className="space-y-10 mt-10 z-10">
       {/*Slider section  */}
       <section className="px-2">
         <Slider />
