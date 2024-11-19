@@ -84,10 +84,18 @@ const BorrowBookRow = ({ book, refetch }) => {
           className="w-16 h-16 object-cover rounded"
         />
       </td>
-      <td className="px-4 py-2">{theBook?.book}</td>
-      <td className="px-4 py-2">{theBook?.author}</td>
-      <td className="px-4 py-2">{book?.borrowDate}</td>
-      <td className="px-4 py-2">{book?.returnDate}</td>
+      <td className="px-4 py-2">
+        <span className="block w-32 md:w-auto">{theBook?.book}</span>
+      </td>
+      <td className="px-4 py-2">
+        <span className="block w-24 md:w-auto">{theBook?.author}</span>
+      </td>
+      <td className="px-4 py-2">
+        <span className="block w-20 md:w-auto">{book?.borrowDate}</span>
+      </td>
+      <td className="px-4 py-2">
+        <span className="block w-20 md:w-auto">{book?.returnDate}</span>
+      </td>
       <td className="px-4 py-2">
         {isOverdue ? (
           <span className="text-red-500 font-semibold">Overdue</span>
@@ -95,7 +103,7 @@ const BorrowBookRow = ({ book, refetch }) => {
           <span className="text-green-500 font-semibold">On Time</span>
         )}
       </td>
-      <td className="px-4 py-2 flex items-center justify-center gap-x-2">
+      <td className="px-4 py-2 mt-3 flex items-center justify-center gap-x-2">
         <Link
           to={`/bookDetails/${theBook?._id}`}
           className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-400 transition duration-300 ease-in-out transform hover:scale-105"
