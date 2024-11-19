@@ -26,23 +26,20 @@ const BookDetails = () => {
     }
   }, [book]);
 
-  // Handle borrowing logic and toast message
   const handleBorrowClick = () => {
-    // Check if the user has already borrowed the book
     if (
       theUserBorrowBooks.some(
         (borrowedBook) => borrowedBook.mainBookId === book?._id
       )
     ) {
       toast.error("You have already borrowed this book.");
-      setDisable(true); // Disable the borrow button if the user already borrowed the book
+      setDisable(true);
       return;
     }
 
-    // Check if the user has borrowed 3 books
     if (theUserBorrowBooks.length >= 3) {
       toast.error("Maximum 3 books are borrowable.");
-      setDisable(true); // Disable the borrow button if the maximum limit is reached
+      setDisable(true);
       return;
     }
 

@@ -2,7 +2,7 @@ import BorrowBookRow from "../../Components/BorrowBookRow";
 import useBorrowBook from "../../Hooks/useBorrowBook";
 
 const BorrowedBook = () => {
-  const { theUserBorrowBooks } = useBorrowBook();
+  const { theUserBorrowBooks, refetch } = useBorrowBook();
   // console.log(theUserBorrowBooks);
 
   return (
@@ -27,7 +27,7 @@ const BorrowedBook = () => {
             </thead>
             <tbody>
               {theUserBorrowBooks?.map((book, index) => (
-                <BorrowBookRow key={index} book={book} />
+                <BorrowBookRow key={index} book={book} refetch={refetch} />
               ))}
             </tbody>
           </table>
