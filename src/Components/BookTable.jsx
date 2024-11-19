@@ -57,12 +57,12 @@ const BookTable = ({ book }) => {
         {book?.quantity}
       </td>
       <td className="px-6 py-4">
-        <button
+        <Link
+          to={`/bookDetails/${book?._id}`}
           className="text-sm px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          onClick={() => alert(`Details of: ${book?.title}`)}
         >
           Details
-        </button>
+        </Link>
       </td>
       {user?.email === book?.email && (
         <td className="px-6 py-4">

@@ -39,7 +39,9 @@ const BookCard = ({ book }) => {
       />
 
       {/* Book Title */}
-      <h3 className="md:text-xl font-semibold text-gray-800 mb-2">{book?.book}</h3>
+      <h3 className="lg:text-xl font-semibold text-gray-800 mb-2">
+        {book?.book}
+      </h3>
 
       {/* Author */}
       <p className="text-sm text-gray-600">{book?.author}</p>
@@ -66,9 +68,12 @@ const BookCard = ({ book }) => {
             <FaPencil />
           </Link>
         )}
-        <button className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-700 focus:outline-none transition-colors">
+        <Link
+          to={`/bookDetails/${book?._id}`}
+          className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-700 focus:outline-none transition-colors"
+        >
           <FcViewDetails />
-        </button>
+        </Link>
       </div>
     </div>
   );
