@@ -8,7 +8,7 @@ const useBorrowBook = () => {
   const { data: borrowBooks = [], refetch } = useQuery({
     queryKey: ["borrowBook"],
     queryFn: async () => {
-      const result = await axiosPublic.get("/borrowBooks");
+      const result = await axiosPublic.get("/borrowBooks", {withCredentials: true});
       return result.data;
     },
   });

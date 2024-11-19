@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
@@ -52,8 +53,27 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       // console.log("logged from :", currentUser);
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
       setUser(currentUser);
       setLoading(false);
+      // if user exist then issue a token
+      if (currentUser) {
+        axios
+          .post(`${import.meta.env.VITE_API_URL}/jwt`, loggedUser, {
+            withCredentials: true
+          })
+          .then((res) => {
+            console.log("token res:", res.data);
+          });
+      } else {
+        axios.post(`${import.meta.env.VITE_API_URL}/logout`,loggedUser,{
+          withCredentials: true
+        })
+        .then(res=>{
+          console.log(res.data);
+        })
+      }
     });
     return () => {
       unSubscribe();
