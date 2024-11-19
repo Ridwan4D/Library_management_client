@@ -36,19 +36,21 @@ const BookTable = ({ book }) => {
         />
       </td>
       <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-200">
-        {book?.title}
+        {book?.book}
       </td>
       <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-400">
         {book?.author}
       </td>
-      <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-400">
+      <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-400 uppercase">
         {book?.bookCategory}
       </td>
       <td className="px-6 py-4 text-sm font-bold text-yellow-500">
-        {book?.rating ? renderStars(book?.rating) : "No rating available"}
+        <span className="block w-20">
+          {book?.rating ? renderStars(book?.rating) : "No rating available"}
+        </span>
       </td>
       <td
-        className={`px-6 py-4 text-sm font-semibold ${
+        className={`px-6 py-4 text-sm text-center font-semibold ${
           book?.quantity > 0 ? "text-green-600" : "text-red-600"
         }`}
       >

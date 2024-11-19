@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FiMenu } from "react-icons/fi"; // Import menu icon
+import { IoClose } from "react-icons/io5"; // Import close icon
 import useBooks from "../../Hooks/useBooks";
 import useCategories from "../../Hooks/useCategories";
 import useAuth from "../../Hooks/useAuth";
@@ -10,6 +12,7 @@ const AllBooks = () => {
   const { books } = useBooks();
   const { categories } = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
   const [viewMode, setViewMode] = useState("card"); // "card" or "table"
@@ -35,11 +38,22 @@ const AllBooks = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-1 md:p-8">
       {/* Top Bar */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 px-1">
         <h1 className="text-2xl font-bold text-gray-800">All Books</h1>
-        <div className="flex items-center space-x-4">
+        <div className="md:hidden">
+          {/* Hamburger Menu */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 text-gray-600 bg-gray-200 rounded-full hover:bg-gray-300"
+          >
+            {menuOpen ? <IoClose size={24} /> : <FiMenu size={24} />}
+          </button>
+        </div>
+
+        {/* Buttons for larger screens */}
+        <div className="hidden md:flex items-center space-x-4">
           <button
             onClick={() => setViewMode("card")}
             className={`px-4 py-2 text-sm font-semibold text-white rounded-md shadow ${
@@ -65,9 +79,37 @@ const AllBooks = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden mb-4">
+          <button
+            onClick={() => setViewMode("card")}
+            className={`block w-full text-left px-4 py-2 text-sm font-semibold text-white rounded-md shadow mb-2 ${
+              viewMode === "card" ? "bg-indigo-700" : "bg-indigo-600"
+            } hover:bg-indigo-500`}
+          >
+            Card View
+          </button>
+          <button
+            onClick={() => setViewMode("table")}
+            className={`block w-full text-left px-4 py-2 text-sm font-semibold text-white rounded-md shadow mb-2 ${
+              viewMode === "table" ? "bg-indigo-700" : "bg-indigo-600"
+            } hover:bg-indigo-500`}
+          >
+            Table View
+          </button>
+          <button
+            onClick={handleFilterToggle}
+            className="block w-full text-left px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-500 focus:outline-none"
+          >
+            Filter Books
+          </button>
+        </div>
+      )}
+
       {/* Books Section */}
       {viewMode === "card" ? (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-1">
           {filteredBooks && filteredBooks.length > 0 ? (
             filteredBooks.map((book, idx) => <BookCard key={idx} book={book} />)
           ) : (
@@ -77,7 +119,7 @@ const AllBooks = () => {
           )}
         </div>
       ) : (
-        <section className="container px-4 mx-auto">
+        <section className="container md:px-4 mx-auto">
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-800">

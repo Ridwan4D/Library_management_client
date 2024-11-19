@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import useAuth from "../Hooks/useAuth";
 import { Link } from "react-router-dom";
+import { FaPencil } from "react-icons/fa6";
+import { FcViewDetails } from "react-icons/fc";
 
 const BookCard = ({ book }) => {
   const { user } = useAuth();
@@ -37,7 +39,7 @@ const BookCard = ({ book }) => {
       />
 
       {/* Book Title */}
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">{book?.book}</h3>
+      <h3 className="md:text-xl font-semibold text-gray-800 mb-2">{book?.book}</h3>
 
       {/* Author */}
       <p className="text-sm text-gray-600">{book?.author}</p>
@@ -48,7 +50,9 @@ const BookCard = ({ book }) => {
       </p>
 
       {/* Book Rating */}
-      <div className="mt-2 text-yellow-500 text-2xl"> {/* Increase star size here */}
+      <div className="mt-2 text-yellow-500 text-2xl">
+        {" "}
+        {/* Increase star size here */}
         {book?.rating ? renderStars(book?.rating) : "No rating available"}
       </div>
 
@@ -59,11 +63,11 @@ const BookCard = ({ book }) => {
             to={`/updateBook/${book?._id}`}
             className="px-4 py-2 text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-700 focus:outline-none transition-colors"
           >
-            Update
+            <FaPencil />
           </Link>
         )}
         <button className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-700 focus:outline-none transition-colors">
-          Details
+          <FcViewDetails />
         </button>
       </div>
     </div>
