@@ -79,25 +79,50 @@ const Nav = () => {
         </ul>
         {/* Conditional Avatar or Login Button */}
         {user ? (
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="avatar cursor-pointer">
+          <div className="flex items-center space-x-3">
+            {/* Avatar */}
+            <div className="avatar cursor-pointer">
               <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img src={user.photoURL} alt="User Avatar" />
               </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40"
-            >
-              <li>
-                <button
-                  className="text-left text-red-500 font-semibold"
-                  onClick={handleLogout}
+            </div>
+            {/* User Info */}
+            <div className="text-sm text-gray-700">
+              <span className="font-semibold block">{user?.displayName}</span>
+              <span className="block text-gray-500">{user?.email}</span>
+            </div>
+            {/* Dropdown with Logout */}
+            <div className="dropdown dropdown-end ml-4">
+              <label tabIndex={0} className="cursor-pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-700"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  Logout
-                </button>
-              </li>
-            </ul>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40"
+              >
+                <li>
+                  <button
+                    className="text-left text-red-500 font-semibold"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         ) : (
           <NavLink
