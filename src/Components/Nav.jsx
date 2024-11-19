@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import useAuth from "../Hooks/useAuth";
 
 const Nav = () => {
   const { user, logout } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
     try {
@@ -11,6 +14,23 @@ const Nav = () => {
       console.error("Logout failed:", error);
     }
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const navLinks = (
     <>
@@ -21,11 +41,48 @@ const Nav = () => {
         <NavLink to="/addBook">Add Book</NavLink>
       </li>
       <li>
-        <NavLink to="/allBooks">All Book</NavLink>
+        <NavLink to="/allBooks">All Books</NavLink>
       </li>
       <li>
-        <NavLink to="/borrowedBook">Borrowed Book</NavLink>
+        <NavLink to="/borrowedBook">Borrowed Books</NavLink>
       </li>
+      {user ? (
+        <li className="relative" ref={dropdownRef}>
+          <button
+            tabIndex={0}
+            className="avatar cursor-pointer"
+            onClick={toggleDropdown}
+          >
+            <div className="w-6 h-6 md:w-10 md:h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={user.photoURL} alt="User Avatar" />
+            </div>
+          </button>
+          <ul
+            tabIndex={0}
+            className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40 absolute right-0 ${
+              isDropdownOpen ? "block" : "hidden"
+            }`}
+          >
+            <li>
+              <button
+                className="text-left text-red-500 font-semibold"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        </li>
+      ) : (
+        <li>
+          <NavLink
+            to="/register"
+            className="btn bg-slate-200 py-2 px-5 text-gray-500 font-semibold"
+          >
+            Login
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -77,36 +134,6 @@ const Nav = () => {
         <ul className="menu menu-horizontal px-2 space-x-4 font-semibold">
           {navLinks}
         </ul>
-        {/* Conditional Avatar or Login Button */}
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="avatar cursor-pointer">
-              <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={user.photoURL} alt="User Avatar" />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40"
-            >
-              <li>
-                <button
-                  className="text-left text-red-500 font-semibold"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <NavLink
-            to="/register"
-            className="btn bg-slate-200 py-2 px-5 text-gray-500 font-semibold"
-          >
-            Login
-          </NavLink>
-        )}
       </div>
     </div>
   );
