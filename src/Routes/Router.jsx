@@ -9,6 +9,7 @@ import SecureRoute from "./SecureRoute";
 import AllBooks from "../Pages/AllBooks/AllBooks";
 import UpdateBook from "../Pages/UpdateBook/UpdateBook";
 import BookDetails from "../Pages/BookDetails/BookDetails";
+import BorrowedBook from "../Pages/BorrowedBook/BorrowedBook";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
         element: (
           <SecureRoute>
             <BookDetails />
+          </SecureRoute>
+        ),
+      },
+      {
+        path: "/borrowedBook",
+        element: (
+          <SecureRoute>
+            <BorrowedBook />
           </SecureRoute>
         ),
       },

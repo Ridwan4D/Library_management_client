@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import useAuth from "../Hooks/useAuth";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const BorrowModal = ({ isOpen, onClose, book }) => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -34,6 +36,9 @@ const BorrowModal = ({ isOpen, onClose, book }) => {
         axiosPublic.patch(`/books/${book?._id}`, quantityInfo).then((res) => {
           if (res.data.modifiedCount) {
             toast.success("Book add to borrow");
+            setTimeout(() => {
+              navigate("/borrowedBook");
+            }, 1000);
           }
         });
       }
