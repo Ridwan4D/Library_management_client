@@ -6,6 +6,7 @@ import useCategories from "../../Hooks/useCategories";
 import useAuth from "../../Hooks/useAuth";
 import BookCard from "../../Components/BookCard ";
 import BookTable from "../../Components/BookTable";
+import { Helmet } from "react-helmet";
 
 const AllBooks = () => {
   const { user } = useAuth();
@@ -39,6 +40,9 @@ const AllBooks = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-1 md:p-8">
+      <Helmet>
+        <title>All Books | Library Management System</title>
+      </Helmet>
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-6 px-1">
         <h1 className="text-2xl font-bold text-gray-800">All Books</h1>

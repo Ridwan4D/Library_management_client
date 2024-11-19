@@ -9,6 +9,7 @@ import axios from "axios";
 import { MdAddCard } from "react-icons/md";
 import AddCategoryModal from "./Shared/AddCategoryModal";
 import useCategories from "../../Hooks/useCategories";
+import { Helmet } from "react-helmet";
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -98,6 +99,9 @@ const AddBook = () => {
 
   return (
     <div className=" px-1 mx-auto max-w-6xl">
+      <Helmet>
+        <title>Add Book | Library Management System</title>
+      </Helmet>
       <div className="flex justify-between items-center bg-gray-200 px-5 py-4 mt-1">
         <h3 className="font-medium md:text-xl lg:text-3xl">Add New Category</h3>
         <button className="text-xl md:text-3xl" onClick={handleOpenModal}>

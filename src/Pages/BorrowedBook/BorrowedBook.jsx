@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import BorrowBookRow from "../../Components/BorrowBookRow";
 import useBorrowBook from "../../Hooks/useBorrowBook";
 
@@ -6,6 +7,9 @@ const BorrowedBook = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <Helmet>
+        <title>Borrowd Book | Library Management System</title>
+      </Helmet>
       <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 mt-4 px-4">
           Your Borrowed Books

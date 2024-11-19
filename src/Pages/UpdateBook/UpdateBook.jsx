@@ -7,6 +7,7 @@ import axios from "axios";
 import useBooks from "../../Hooks/useBooks";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useCategories from "../../Hooks/useCategories";
+import { Helmet } from "react-helmet";
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -107,6 +108,9 @@ const UpdateBook = () => {
 
   return (
     <div className="px-1 mx-auto max-w-6xl">
+      <Helmet>
+        <title>Update Book | Library Management System</title>
+      </Helmet>
       <h2 className="mb-8 text-2xl lg:text-4xl font-bold text-center text-gray-800">
         Update Book
       </h2>

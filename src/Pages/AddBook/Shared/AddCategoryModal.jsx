@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const AddCategoryModal = ({ isOpen, onClose }) => {
   const axiosPublic = useAxiosPublic();
-  const { categories,refetch } = useCategories();
+  const { categories, refetch } = useCategories();
   // console.log(categories);
 
   const {
@@ -49,7 +49,10 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
         </div>
         <div className="flex flex-col md:flex-row">
           {/* Left Side */}
-          <div id="addCatModal" className="flex-1 p-4 bg-gray-100 max-h-56 md:max-h-full overflow-y-auto">
+          <div
+            id="addCatModal"
+            className="flex-1 p-4 bg-gray-100 max-h-56 md:max-h-full overflow-y-auto"
+          >
             <h3 className="text-lg font-semibold mb-4">Added Categories</h3>
             <ul className="space-y-2">
               {categories.map((category, idx) => (

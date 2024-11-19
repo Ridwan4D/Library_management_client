@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useBooks from "../../Hooks/useBooks";
 import CategoryBookCard from "./Shared/CategoryBookCard";
+import { Helmet } from "react-helmet";
 
 const CategoryBookPage = () => {
   const { name } = useParams();
@@ -13,6 +14,9 @@ const CategoryBookPage = () => {
 
   return (
     <div className="container mx-auto py-10 px-4">
+      <Helmet>
+        <title>{name} Category | Library Management System</title>
+      </Helmet>
       {/* Category Title */}
       <h2 className="text-2xl lg:text-4xl font-bold text-center text-teal-600 mb-10">
         {name.charAt(0).toUpperCase() + name.slice(1)} Books

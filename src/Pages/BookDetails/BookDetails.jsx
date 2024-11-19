@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import BorrowModal from "../../Components/BorrowModal";
 import useBorrowBook from "../../Hooks/useBorrowBook";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -57,6 +58,9 @@ const BookDetails = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <Helmet>
+        <title>Book Details | Library Management System</title>
+      </Helmet>
       <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Left Side - Book Image */}
