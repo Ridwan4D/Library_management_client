@@ -113,7 +113,7 @@ const BookDetails = () => {
       <BorrowModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        book={book}
+        theBook={book}
       />
     </div>
   );

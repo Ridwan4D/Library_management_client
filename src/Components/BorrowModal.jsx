@@ -5,7 +5,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const BorrowModal = ({ isOpen, onClose, book }) => {
+const BorrowModal = ({ isOpen, onClose, theBook }) => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
@@ -22,27 +22,40 @@ const BorrowModal = ({ isOpen, onClose, book }) => {
 
   const handleFormSubmit = (data) => {
     const borrowInfo = {
-      mainBookId: book?._id,
+      mainBookId: theBook?._id,
       returnDate: data.date,
       borrowDate: currentDate,
       name: user?.displayName,
       addMail: user?.email,
     };
-    console.log(borrowInfo);
-    axiosPublic.post("/borrowBooks", borrowInfo).then((res) => {
-      if (res.data.insertedId) {
-        const updateQuantity = parseInt(book?.quantity) - 1;
-        const quantityInfo = { updateQuantity };
-        axiosPublic.patch(`/books/${book?._id}`, quantityInfo).then((res) => {
-          if (res.data.modifiedCount) {
-            toast.success("Book add to borrow");
-            setTimeout(() => {
-              navigate("/borrowedBook");
-            }, 1000);
-          }
-        });
-      }
-    });
+
+    axiosPublic
+      .post("/borrowBooks", borrowInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          const updateQuantity = parseInt(theBook?.quantity) - 1;
+          const quantityInfo = { updateQuantity };
+          console.log(quantityInfo);
+          axiosPublic
+            .patch(`/books/${theBook?._id}`, quantityInfo)
+            .then((res) => {
+              if (res.data.modifiedCount) {
+                toast.success("Book added to borrow");
+                setTimeout(() => {
+                  navigate("/borrowedBook");
+                }, 1000);
+              }
+            })
+            .catch((error) => {
+              toast.error("Failed to update book quantity");
+              console.error(error);
+            });
+        }
+      })
+      .catch((error) => {
+        toast.error("Failed to borrow book");
+        console.error(error);
+      });
   };
 
   return (
@@ -62,7 +75,9 @@ const BorrowModal = ({ isOpen, onClose, book }) => {
                 validate: {
                   notPastDate: (value) => {
                     // Check if the return date is not in the past
-                    if (new Date(value) < new Date(currentDate)) {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+                    if (new Date(value) < today) {
                       return "Return date cannot be in the past";
                     }
                     return true;
@@ -127,9 +142,9 @@ const BorrowModal = ({ isOpen, onClose, book }) => {
 };
 
 BorrowModal.propTypes = {
-  book: PropTypes.object,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  theBook: PropTypes.object,
 };
 
 export default BorrowModal;
