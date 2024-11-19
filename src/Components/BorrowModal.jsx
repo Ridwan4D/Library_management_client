@@ -18,43 +18,49 @@ const BorrowModal = ({ isOpen, onClose, theBook }) => {
   // Get the current date in YYYY-MM-DD format
   const currentDate = new Date().toISOString().split("T")[0];
 
-  if (!isOpen) return null;
+  if (!isOpen || !theBook) return null; // Ensure the modal does not render if theBook is not provided
 
   const handleFormSubmit = (data) => {
+    if (!theBook?._id || !theBook?.quantity) {
+      toast.error("Book information is missing.");
+      return;
+    }
+
     const borrowInfo = {
-      mainBookId: theBook?._id,
+      mainBookId: theBook._id,
       returnDate: data.date,
       borrowDate: currentDate,
       name: user?.displayName,
       addMail: user?.email,
     };
 
+    // POST request to borrow the book
     axiosPublic
       .post("/borrowBooks", borrowInfo)
       .then((res) => {
         if (res.data.insertedId) {
-          const updateQuantity = parseInt(theBook?.quantity) - 1;
-          const quantityInfo = { updateQuantity };
-          console.log(quantityInfo);
+          const updateQuantity = { quantity: parseInt(theBook.quantity) - 1 };
           axiosPublic
-            .patch(`/books/${theBook?._id}`, quantityInfo)
+            .patch(`/books/${theBook._id}`, updateQuantity)
             .then((res) => {
               if (res.data.modifiedCount) {
                 toast.success("Book added to borrow");
+
+                // Redirect after successful borrowing
                 setTimeout(() => {
                   navigate("/borrowedBook");
                 }, 1000);
               }
             })
             .catch((error) => {
-              toast.error("Failed to update book quantity");
-              console.error(error);
+              console.error("Error updating quantity:", error);
+              toast.error("Failed to update book quantity.");
             });
         }
       })
       .catch((error) => {
-        toast.error("Failed to borrow book");
-        console.error(error);
+        console.error("Error borrowing book:", error);
+        toast.error("Failed to borrow the book.");
       });
   };
 
@@ -142,9 +148,9 @@ const BorrowModal = ({ isOpen, onClose, theBook }) => {
 };
 
 BorrowModal.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  theBook: PropTypes.object,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  theBook: PropTypes.object.isRequired,
 };
 
 export default BorrowModal;

@@ -3,12 +3,12 @@ import useBorrowBook from "../../Hooks/useBorrowBook";
 
 const BorrowedBook = () => {
   const { theUserBorrowBooks } = useBorrowBook();
-  console.log(theUserBorrowBooks);
+  // console.log(theUserBorrowBooks);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 mt-4 px-4">
           Your Borrowed Books
         </h2>
         {/* Table */}

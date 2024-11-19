@@ -10,18 +10,20 @@ const BookDetails = () => {
   const { books } = useBooks();
   const [disable, setDisable] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //   console.log(id);
+
+  // Find the book by ID
   const book = books.find((book) => book?._id === id);
 
-  // Check quantity
+  // Handle book quantity availability
   useEffect(() => {
     if (book?.quantity < 1) {
-      setDisable(true);
+      setDisable(true); // Disable borrow button if quantity is 0
     } else {
-      setDisable(false);
+      setDisable(false); // Enable borrow button if quantity is available
     }
   }, [book]);
 
+  // If book not found, show a message
   if (!book) {
     return (
       <div className="flex justify-center items-center min-h-screen">
