@@ -8,3 +8,21 @@
   font-weight: 700;
   border-radius: 3px;
 }
+
+#addCatModal::-webkit-scrollbar {
+  width: 4px; /* Slimmer scrollbar */
+}
+
+#addCatModal::-webkit-scrollbar-thumb {
+  background: slategray;
+  border-radius: 10px;
+}
+
+#addCatModal::-webkit-scrollbar-thumb:hover {
+  background: rgb(47, 67, 92); /* Darker shade on hover */
+}
+
+#addCatModal::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Lighter background for contrast */
+  border-radius: 10px;
+}
