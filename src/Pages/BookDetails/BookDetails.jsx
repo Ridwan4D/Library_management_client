@@ -101,7 +101,7 @@ const BookDetails = () => {
               {user?.email === book?.email && (
                 <Link
                   to={`/updateBook/${book?._id}`}
-                  className="px-4 py-2 bg-teal-500 text-white rounded-md shadow hover:bg-teal-400 focus:outline-none"
+                  className="px-4 py-2 bg-teal-500 text-white rounded-md shadow hover:bg-teal-400 focus:outline-none text-center"
                 >
                   Update
                 </Link>
