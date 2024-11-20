@@ -35,22 +35,19 @@ const Footer = () => {
                 Category
               </p>
               <ul className="mt-2 space-y-2">
-                {/* Display only 4 categories initially */}
                 {categories
                   .slice(0, showAll ? categories.length : 4)
                   .map((cat, idx) => (
                     <li key={idx}>
                       <Link
                         to={`/category/${cat?.category}`}
-                        className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200 uppercase"
+                        className="text-gray-500 transition duration-300 hover:text-teal-400 hover:underline"
                       >
                         {cat?.category}
                       </Link>
                     </li>
                   ))}
               </ul>
-
-              {/* Show More Button */}
               {categories.length > 4 && (
                 <button
                   onClick={handleShowMore}
@@ -61,7 +58,6 @@ const Footer = () => {
               )}
             </div>
 
-            {/* Other sections */}
             <div>
               <p className="font-medium tracking-wide text-gray-300">
                 Thriller
@@ -71,9 +67,9 @@ const Footer = () => {
                   <li key={idx}>
                     <Link
                       to={`/bookDetails/${book?._id}`}
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                      className="text-gray-500 transition duration-300 hover:text-teal-400 hover:underline"
                     >
-                      {book.book.slice(0,22)}
+                      {book.book.slice(0, 22)}
                     </Link>
                   </li>
                 ))}
@@ -88,9 +84,9 @@ const Footer = () => {
                   <li key={idx}>
                     <Link
                       to={`/bookDetails/${book?._id}`}
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                      className="text-gray-500 transition duration-300 hover:text-teal-400 hover:underline"
                     >
-                      {book.book.slice(0,22)}
+                      {book.book.slice(0, 22)}
                     </Link>
                   </li>
                 ))}
@@ -105,9 +101,9 @@ const Footer = () => {
                   <li key={idx}>
                     <Link
                       to={`/bookDetails/${book?._id}`}
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                      className="text-gray-500 transition duration-300 hover:text-teal-400 hover:underline"
                     >
-                      {book.book.slice(0,22)}
+                      {book.book.slice(0, 22)}
                     </Link>
                   </li>
                 ))}
@@ -124,18 +120,18 @@ const Footer = () => {
                 placeholder="Email"
                 required
                 type="text"
-                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-teal-400 focus:outline-none focus:shadow-outline"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
               >
                 Subscribe
               </button>
             </form>
             <p className="mt-4 text-sm text-gray-500">
-              Subscribe and become a member of Book Site, to get all update from
-              us.
+              Subscribe and become a member of Book Site, to get all updates
+              from us.
             </p>
           </div>
         </div>
@@ -147,19 +143,19 @@ const Footer = () => {
           <div className="flex items-center mt-4 space-x-4 sm:mt-0">
             <a
               href="/"
-              className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+              className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
             >
               <FaTwitter className="h-5 w-5" />
             </a>
             <a
               href="/"
-              className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+              className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
             >
               <FaInstagram className="h-5 w-5" />
             </a>
             <a
               href="/"
-              className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+              className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
             >
               <FaFacebook className="h-5 w-5" />
             </a>
