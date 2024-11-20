@@ -6,13 +6,14 @@ import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons for show/hide password
 import SocialLogin from "../../Components/SocialLogin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 const cloudName = import.meta.env.VITE_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
 
 const Register = () => {
   const { signUpUser } = useAuth();
+  const navigate = useNavigate(); // Initialize the navigate function
   const {
     register,
     handleSubmit,
@@ -41,22 +42,24 @@ const Register = () => {
       const cloudinaryData = await cloudinaryRes.json();
       const imageUrl = cloudinaryData.secure_url;
 
-      // Register user
       const userCredential = await signUpUser(data.email, data.password);
-
-      // Update Firebase profile
       await updateProfile(userCredential.user, {
         displayName: data.name,
         photoURL: imageUrl,
       });
 
       // Save user data in the database
-      const userInfo = {
-        userName: data.name,
-        userEmail: data.email,
-        userImage: imageUrl,
-      };
-      console.log(userInfo);
+      // const userInfo = {
+      //   userName: data.name,
+      //   userEmail: data.email,
+      //   userImage: imageUrl,
+      // };
+      // console.log(userInfo);
+
+      // Navigate to the home page after successful registration
+      navigate("/"); // Redirect to the home page
+
+      toast.success("Registration successful!");
     } catch (error) {
       console.error("Error during registration:", error);
       toast.error("Something went wrong. Please try again.");
@@ -69,7 +72,7 @@ const Register = () => {
   return (
     <div>
       <Helmet>
-      <title>Register | Library Management System</title>
+        <title>Register | Library Management System</title>
       </Helmet>
       <div className="flex h-screen flex-row-reverse">
         {/* Left Pane */}

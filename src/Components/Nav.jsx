@@ -8,6 +8,7 @@ const Nav = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const dropdownRef = useRef(null);
+
   const handleToggle = (e) => {
     if (e.target.checked) {
       setTheme("dark");
@@ -15,6 +16,7 @@ const Nav = () => {
       setTheme("light");
     }
   };
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
@@ -35,14 +37,19 @@ const Nav = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      // Close the dropdown when clicking outside the dropdown
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest(".avatar")
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mouseup", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mouseup", handleClickOutside);
     };
   }, []);
 
@@ -61,11 +68,14 @@ const Nav = () => {
         <NavLink to="/borrowedBook">Borrowed Books</NavLink>
       </li>
       {user ? (
-        <li className="relative" ref={dropdownRef}>
+        <li className="relative z-50 hidden md:block" ref={dropdownRef}>
           <button
             tabIndex={0}
             className="avatar cursor-pointer"
-            onClick={toggleDropdown}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent closing the dropdown when clicking the button
+              toggleDropdown();
+            }}
           >
             <div className="w-6 h-6 md:w-10 md:h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
               <img src={user.photoURL} alt="User Avatar" />
@@ -73,7 +83,7 @@ const Nav = () => {
           </button>
           <ul
             tabIndex={0}
-            className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-auto absolute right-0 ${
+            className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-auto absolute right-0 z-50 ${
               isDropdownOpen ? "block" : "hidden"
             }`}
           >
@@ -84,13 +94,17 @@ const Nav = () => {
               <p>{user?.email}</p>
             </li>
             <li>
-              <label className="flex cursor-pointer gap-2">
+              <label
+                className="flex cursor-pointer gap-2"
+                onClick={(e) => e.stopPropagation()} // Prevent the dropdown from collapsing
+              >
                 <RiSunLine className="text-xl" />
                 <input
                   onChange={handleToggle}
                   type="checkbox"
                   value="dark"
                   className="toggle theme-controller"
+                  checked={theme === "dark"}
                 />
                 <RiMoonFill className="text-xl" />
               </label>
@@ -98,7 +112,10 @@ const Nav = () => {
             <li>
               <button
                 className="text-left text-red-500 font-semibold"
-                onClick={handleLogout}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent the dropdown from collapsing
+                  handleLogout();
+                }}
               >
                 Logout
               </button>
@@ -141,7 +158,7 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-white rounded-box mt-3 w-52 p-2 shadow"
           >
             {navLinks}
           </ul>
@@ -154,16 +171,84 @@ const Nav = () => {
           />
         </a>
       </div>
+
       <div className="navbar-center">
-        <h2 className="text-lg: md:text-2xl font-semibold text-teal-600">
+        <h2 className="text-lg: md:text-2xl font-semibold text-teal-600  hidden md:block">
           L<sub className="text-sm">ibrary</sub> M
           <sub className="text-sm">anagement</sub> S
           <sub className="text-sm">ystem</sub>
         </h2>
+        <ul className="md:hidden z-10">
+          {user ? (
+            <li className="relative z-10 md:hidden mr-5">
+              <button
+                tabIndex={0}
+                className="avatar cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown();
+                }}
+              >
+                <div className="w-8 h-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <img src={user.photoURL} alt="User Avatar" />
+                </div>
+              </button>
+              <ul
+                tabIndex={0}
+                className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-auto absolute right-0 z-10 ${
+                  isDropdownOpen ? "block" : "hidden"
+                }`}
+              >
+                <li>
+                  <p>{user?.displayName}</p>
+                </li>
+                <li>
+                  <p>{user?.email}</p>
+                </li>
+                <li>
+                  <label
+                    className="flex cursor-pointer gap-2"
+                    onClick={(e) => e.stopPropagation()} // Prevent the dropdown from collapsing
+                  >
+                    <RiSunLine className="text-xl" />
+                    <input
+                      onChange={handleToggle}
+                      type="checkbox"
+                      value="dark"
+                      className="toggle theme-controller"
+                      checked={theme === "dark"}
+                    />
+                    <RiMoonFill className="text-xl" />
+                  </label>
+                </li>
+                <li>
+                  <button
+                    className="text-left text-red-500 font-semibold"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the dropdown from collapsing
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <NavLink
+                to="/register"
+                className="btn bg-slate-200 py-2 px-5 text-gray-500 font-semibold"
+              >
+                Login
+              </NavLink>
+            </li>
+          )}
+        </ul>
       </div>
 
       <div className="navbar-end hidden lg:flex items-center space-x-4">
-        <ul className="menu menu-horizontal px-2 space-x-4 font-semibold">
+        <ul className="menu menu-horizontal px-2 space-x-4 font-semibold dark:bg-black dark:text-red-500">
           {navLinks}
         </ul>
       </div>

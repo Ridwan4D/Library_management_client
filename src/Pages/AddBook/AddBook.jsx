@@ -77,7 +77,7 @@ const AddBook = () => {
       email,
     };
 
-    // console.log(bookInfo);
+    // // console.log(bookInfo);
     axiosPublic
       .post("/books", bookInfo)
       .then((res) => {
@@ -91,7 +91,7 @@ const AddBook = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   const handleOpenModal = () => setIsModalOpen(true);

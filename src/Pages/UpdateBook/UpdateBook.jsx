@@ -89,7 +89,7 @@ const UpdateBook = () => {
       author,
     };
 
-    console.log(bookInfo);
+    // console.log(bookInfo);
     axiosPublic
       .put(`/books/${updateBook?._id}`, bookInfo)
       .then((res) => {
@@ -102,7 +102,7 @@ const UpdateBook = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const AddCategoryModal = ({ isOpen, onClose }) => {
   const axiosPublic = useAxiosPublic();
   const { categories, refetch } = useCategories();
-  // console.log(categories);
+  // // console.log(categories);
 
   const {
     register,
@@ -21,7 +21,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
     const categoryInfo = {
       category: data.category.toLowerCase(),
     };
-    console.log(categoryInfo);
+    // console.log(categoryInfo);
     axiosPublic
       .post("/categories", categoryInfo)
       .then((res) => {
@@ -32,7 +32,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
         }
       })
       .catch((err) => {
-        console.log(`err=> ${err}`);
+        // console.log(`err=> ${err}`);
       });
   };
 

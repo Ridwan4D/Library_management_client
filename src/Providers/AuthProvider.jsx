@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types"; // ES6
 import {
@@ -52,7 +53,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("logged from :", currentUser);
+      // // console.log("logged from :", currentUser);
       const userEmail = currentUser?.email || user?.email;
       const loggedUser = { email: userEmail };
       setUser(currentUser);
@@ -63,15 +64,15 @@ const AuthProvider = ({ children }) => {
           .post(`${import.meta.env.VITE_API_URL}/jwt`, loggedUser, {
             withCredentials: true
           })
-          .then((res) => {
-            console.log("token res:", res.data);
+          .then(() => {
+            // console.log("token res:", res.data);
           });
       } else {
         axios.post(`${import.meta.env.VITE_API_URL}/logout`,loggedUser,{
           withCredentials: true
         })
-        .then(res=>{
-          console.log(res.data);
+        .then(()=>{
+          // console.log(res.data);
         })
       }
     });
