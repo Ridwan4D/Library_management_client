@@ -93,8 +93,9 @@ const Slider = () => {
               <p className="mt-1 text-gray-500 italic">Genre: {book.genre}</p>
               <p className="mt-4 text-gray-500">{book.description}</p>
               <Link
-              to="/allBooks"
-              className="btn mt-4 px-6 py-2 text-white bg-teal-500 rounded-full hover:bg-teal-700 transition-colors duration-300">
+                to="/allBooks"
+                className="btn mt-4 px-6 py-2 text-white bg-indigo-500 rounded-full hover:bg-teal-700 transition-colors duration-300"
+              >
                 See More
               </Link>
             </div>

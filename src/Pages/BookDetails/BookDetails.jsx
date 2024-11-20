@@ -6,14 +6,22 @@ import BorrowModal from "../../Components/BorrowModal";
 import useBorrowBook from "../../Hooks/useBorrowBook";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
+import { useForm } from "react-hook-form";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const BookDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const { books } = useBooks();
   const { theUserBorrowBooks } = useBorrowBook();
   const [disable, setDisable] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   // Find the book by ID
   const book = books.find((book) => book?._id === id);
@@ -56,12 +64,29 @@ const BookDetails = () => {
     );
   }
 
+  const onSubmit = (data) => {
+    const reviewInfo = {
+      name: user?.displayName,
+      bookId: book?._id,
+      bookName: book?.book,
+      image: user?.photoURL,
+      review: data.review,
+    };
+    console.log(reviewInfo);
+    axiosPublic.post('/reviews',reviewInfo)
+    .then(res=>{
+      if(res.data.insertedId){
+        toast.success("Review submitted successfully!");
+      }
+    })
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <Helmet>
         <title>Book Details | Library Management System</title>
       </Helmet>
-      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden md:p-5">
         <div className="flex flex-col lg:flex-row">
           {/* Left Side - Book Image */}
           <div className="w-full lg:w-1/2 bg-gray-100 p-4 flex items-center justify-center">
@@ -105,7 +130,7 @@ const BookDetails = () => {
               {user?.email === book?.email && (
                 <Link
                   to={`/updateBook/${book?._id}`}
-                  className="px-4 py-2 bg-teal-500 text-white rounded-md shadow hover:bg-teal-400 focus:outline-none text-center"
+                  className="px-4 py-2 bg-indigo-500 text-white rounded-md shadow hover:bg-teal-400 focus:outline-none text-center"
                 >
                   Update
                 </Link>
@@ -116,7 +141,7 @@ const BookDetails = () => {
                   className={`px-4 py-2 rounded-md shadow focus:outline-none ${
                     disable
                       ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-teal-500 hover:bg-teal-400 text-white"
+                      : "bg-indigo-500 hover:bg-teal-400 text-white"
                   }`}
                   disabled={disable}
                 >
@@ -136,6 +161,34 @@ const BookDetails = () => {
             {book.bookDescription || "No description available for this book."}
           </p>
         </div>
+        <hr className="border-gray-300 border-dashed" />
+        {/* Review Form */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-6 bg-white shadow-lg rounded-md mt-6 border border-gray-400"
+        >
+          <label
+            htmlFor="review"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
+            Your Review
+          </label>
+          <textarea
+            id="review"
+            {...register("review", { required: "Review is required" })}
+            rows="4"
+            className="w-full p-4 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          {errors.review && (
+            <p className="text-red-500 text-sm mt-2">{errors.review.message}</p>
+          )}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-indigo-500 text-white rounded-md shadow hover:bg-teal-400 focus:outline-none mt-4"
+          >
+            Submit Review
+          </button>
+        </form>
       </div>
 
       {/* Borrow Modal */}

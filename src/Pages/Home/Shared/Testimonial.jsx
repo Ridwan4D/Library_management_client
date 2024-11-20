@@ -9,32 +9,32 @@ const Testimonial = () => {
     {
       name: "Sarah Johnson",
       image: "https://i.pravatar.cc/100?img=1",
-      text: "The library site has made borrowing books so much easier. The search feature is really intuitive, and I love the option to reserve books online.",
+      review: "The library site has made borrowing books so much easier. The search feature is really intuitive, and I love the option to reserve books online.",
     },
     {
       name: "Alex Martinez",
       image: "https://i.pravatar.cc/100?img=2",
-      text: "I appreciate how easy it is to manage my borrowed books and due dates through the website. The reminders are super helpful, and the digital library features are fantastic!",
+      review: "I appreciate how easy it is to manage my borrowed books and due dates through the website. The reminders are super helpful, and the digital library features are fantastic!",
     },
     {
       name: "Emily Clark",
       image: "https://i.pravatar.cc/100?img=3",
-      text: "I recently used the library's online platform to find and borrow some new books for my studies. The user interface is very clean, and everything is easy to navigate. Highly recommend!",
+      review: "I recently used the library's online platform to find and borrow some new books for my studies. The user interface is very clean, and everything is easy to navigate. Highly recommend!",
     },
     {
       name: "John Doe",
       image: "https://i.pravatar.cc/100?img=4",
-      text: "I've been using this library website for a few months now, and it's been a game-changer. The ability to check book availability and borrow books directly from the site has saved me so much time.",
+      review: "I've been using this library website for a few months now, and it's been a game-changer. The ability to check book availability and borrow books directly from the site has saved me so much time.",
     },
     {
       name: "Lucy Harper",
       image: "https://i.pravatar.cc/100?img=5",
-      text: "This website has made it easier to explore and borrow a variety of books, both physical and digital. The process is seamless, and I love the notifications for new arrivals.",
+      review: "This website has made it easier to explore and borrow a variety of books, both physical and digital. The process is seamless, and I love the notifications for new arrivals.",
     },
     {
       name: "Mark Wilson",
       image: "https://i.pravatar.cc/100?img=6",
-      text: "As a regular user of the library, I find the website incredibly helpful. I can easily manage my account, renew books, and explore new titles. It's a fantastic resource for book lovers!",
+      review: "As a regular user of the library, I find the website incredibly helpful. I can easily manage my account, renew books, and explore new titles. It's a fantastic resource for book lovers!",
     },
   ];
 
@@ -80,7 +80,7 @@ const Testimonial = () => {
                     <span className="text-lg leading-none italic font-bold text-gray-400 mr-1">
                       "
                     </span>
-                    {testimonial.text}
+                    {testimonial.review}
                     <span className="text-lg leading-none italic font-bold text-gray-400 ml-1">
                       "
                     </span>
