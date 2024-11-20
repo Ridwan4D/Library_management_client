@@ -19,6 +19,7 @@ const BookDetails = () => {
   const { theUserBorrowBooks } = useBorrowBook();
   const [disable, setDisable] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const {
     register,
     handleSubmit,
@@ -29,6 +30,7 @@ const BookDetails = () => {
   const theBookReviews = reviews.filter(
     (review) => review?.bookId === book?._id
   );
+
   useEffect(() => {
     if (book?.quantity < 1) {
       setDisable(true); // Disable borrow button if quantity is 0
@@ -89,6 +91,10 @@ const BookDetails = () => {
       });
   };
 
+  const reviewsToShow = showAllReviews
+    ? theBookReviews
+    : theBookReviews.slice(0, 3);
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <Helmet>
@@ -116,7 +122,7 @@ const BookDetails = () => {
             </p>
             <p className="text-base sm:text-lg font-medium text-gray-600">
               <span className="text-gray-800 font-semibold">Category:</span>{" "}
-              {book.bookCategory}
+              <span className="uppercase">{book.bookCategory}</span>
             </p>
             <p className="text-base sm:text-lg font-medium text-gray-600">
               <span className="text-gray-800 font-semibold">Quantity:</span>{" "}
@@ -203,8 +209,8 @@ const BookDetails = () => {
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">
             Reviews
           </h2>
-          {theBookReviews.length > 0 ? (
-            theBookReviews.map((review) => (
+          {reviewsToShow.length > 0 ? (
+            reviewsToShow.map((review) => (
               <div
                 key={review._id}
                 className="p-4 bg-white shadow rounded-lg mb-4 border border-gray-300"
@@ -230,15 +236,36 @@ const BookDetails = () => {
               No reviews yet. Be the first to write one!
             </p>
           )}
+
+          {/* Show All Button */}
+          {theBookReviews.length > 3 && !showAllReviews && (
+            <button
+              onClick={() => setShowAllReviews(true)}
+              className="mt-4 px-4 py-2 bg-indigo-400 text-white rounded-md shadow hover:bg-indigo-500 focus:outline-none"
+            >
+              Show All Reviews
+            </button>
+          )}
+          {showAllReviews && (
+            <button
+              onClick={() => setShowAllReviews(false)}
+              className="mt-4 px-4 py-2 bg-indigo-400 text-white rounded-md shadow hover:bg-indigo-500 focus:outline-none"
+            >
+              Show Less Reviews
+            </button>
+          )}
         </div>
       </div>
 
       {/* Borrow Modal */}
-      <BorrowModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        theBook={book}
-      />
+      {isModalOpen && (
+        <BorrowModal
+          setIsModalOpen={setIsModalOpen}
+          book={book}
+          user={user}
+          refetch={refetch}
+        />
+      )}
     </div>
   );
 };
