@@ -18,6 +18,12 @@ const Footer = () => {
   const thrillerBooks = books.filter(
     (book) => book.bookCategory === "thriller"
   );
+  const scienceFictionBooks = books.filter(
+    (book) => book.bookCategory === "science fiction"
+  );
+  const historicalFictionBooks = books.filter(
+    (book) => book.bookCategory === "historical fiction"
+  );
 
   return (
     <div className="bg-gray-900">
@@ -67,94 +73,44 @@ const Footer = () => {
                       to={`/bookDetails/${book?._id}`}
                       className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
                     >
-                      {book.book}
+                      {book.book.slice(0,22)}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <p className="font-medium tracking-wide text-gray-300">Cherry</p>
+              <p className="font-medium tracking-wide text-gray-300">
+                Science Fiction
+              </p>
               <ul className="mt-2 space-y-2">
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Media
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Brochure
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Nonprofit
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Educational
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Projects
-                  </a>
-                </li>
+                {scienceFictionBooks.map((book, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={`/bookDetails/${book?._id}`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      {book.book.slice(0,22)}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
               <p className="font-medium tracking-wide text-gray-300">
-                Business
+                Historical Fiction
               </p>
               <ul className="mt-2 space-y-2">
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Infopreneur
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Personal
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Wiki
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Forum
-                  </a>
-                </li>
+                {historicalFictionBooks.map((book, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={`/bookDetails/${book?._id}`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      {book.book.slice(0,22)}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
