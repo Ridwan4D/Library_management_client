@@ -1,11 +1,25 @@
 import { NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import useAuth from "../Hooks/useAuth";
+import { RiMoonFill, RiSunLine } from "react-icons/ri";
 
 const Nav = () => {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const dropdownRef = useRef(null);
+  const handleToggle = (e) => {
+    if (e.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    const localTheme = localStorage.getItem("theme");
+    document.querySelector("html").setAttribute("data-theme", localTheme);
+  }, [theme]);
 
   const handleLogout = async () => {
     try {
@@ -59,10 +73,28 @@ const Nav = () => {
           </button>
           <ul
             tabIndex={0}
-            className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-40 absolute right-0 ${
+            className={`menu dropdown-content bg-white rounded-box shadow p-2 mt-2 w-auto absolute right-0 ${
               isDropdownOpen ? "block" : "hidden"
             }`}
           >
+            <li>
+              <p>{user?.displayName}</p>
+            </li>
+            <li>
+              <p>{user?.email}</p>
+            </li>
+            <li>
+              <label className="flex cursor-pointer gap-2">
+                <RiSunLine className="text-xl" />
+                <input
+                  onChange={handleToggle}
+                  type="checkbox"
+                  value="dark"
+                  className="toggle theme-controller"
+                />
+                <RiMoonFill className="text-xl" />
+              </label>
+            </li>
             <li>
               <button
                 className="text-left text-red-500 font-semibold"
