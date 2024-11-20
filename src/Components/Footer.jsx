@@ -2,8 +2,10 @@ import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
 import useCategories from "../Hooks/useCategories";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useBooks from "../Hooks/useBooks";
 
 const Footer = () => {
+  const { books } = useBooks();
   const { categories } = useCategories();
   const [showAll, setShowAll] = useState(false);
 
@@ -11,6 +13,11 @@ const Footer = () => {
   const handleShowMore = () => {
     setShowAll(!showAll);
   };
+
+  // get books by category
+  const thrillerBooks = books.filter(
+    (book) => book.bookCategory === "thriller"
+  );
 
   return (
     <div className="bg-gray-900">
@@ -50,48 +57,20 @@ const Footer = () => {
 
             {/* Other sections */}
             <div>
-              <p className="font-medium tracking-wide text-gray-300">Apples</p>
+              <p className="font-medium tracking-wide text-gray-300">
+                Thriller
+              </p>
               <ul className="mt-2 space-y-2">
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Web
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    eCommerce
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Business
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Entertainment
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                  >
-                    Portfolio
-                  </a>
-                </li>
+                {thrillerBooks.map((book, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={`/bookDetails/${book?._id}`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      {book.book}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
