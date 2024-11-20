@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
-import { data } from "autoprefixer";
 
 const useReviews = () => {
   const axiosPublic = useAxiosPublic();

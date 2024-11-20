@@ -90,7 +90,7 @@ const AddBook = () => {
           }, 1000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error);
       });
   };

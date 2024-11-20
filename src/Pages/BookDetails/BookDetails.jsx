@@ -8,25 +8,27 @@ import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useReviews from "../../Hooks/useReviews";
 
 const BookDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const { books } = useBooks();
+  const { reviews, refetch } = useReviews();
   const { theUserBorrowBooks } = useBorrowBook();
   const [disable, setDisable] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
-  // Find the book by ID
   const book = books.find((book) => book?._id === id);
-
-  // Handle book quantity availability
+  const theBookReviews = reviews.filter(
+    (review) => review?.bookId === book?._id
+  );
   useEffect(() => {
     if (book?.quantity < 1) {
       setDisable(true); // Disable borrow button if quantity is 0
@@ -72,13 +74,19 @@ const BookDetails = () => {
       image: user?.photoURL,
       review: data.review,
     };
-    console.log(reviewInfo);
-    axiosPublic.post('/reviews',reviewInfo)
-    .then(res=>{
-      if(res.data.insertedId){
-        toast.success("Review submitted successfully!");
-      }
-    })
+    // console.log(reviewInfo);
+    axiosPublic
+      .post("/reviews", reviewInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Review Added Successfully!");
+          refetch();
+          reset();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -189,6 +197,40 @@ const BookDetails = () => {
             Submit Review
           </button>
         </form>
+
+        {/* Reviews Section */}
+        <div className="p-6 bg-gray-50 rounded-md mt-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">
+            Reviews
+          </h2>
+          {theBookReviews.length > 0 ? (
+            theBookReviews.map((review) => (
+              <div
+                key={review._id}
+                className="p-4 bg-white shadow rounded-lg mb-4 border border-gray-300"
+              >
+                <div className="flex items-center mb-3">
+                  <img
+                    src={review.image || "https://via.placeholder.com/40"}
+                    alt={review.name}
+                    className="w-10 h-10 rounded-full mr-3"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      {review.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">{review.bookName}</p>
+                  </div>
+                </div>
+                <p className="text-gray-700">{review.review}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600">
+              No reviews yet. Be the first to write one!
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Borrow Modal */}
