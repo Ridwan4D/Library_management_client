@@ -4,10 +4,9 @@ This is book library site.User can borrow book for reading. If they complete rea
 - React-tooltip
 - Axios
 - JWT
-- Meraki UI
+- Firebase
+- Express Js
 - Daisy UI
-- Mamba UI
-- Kitwind Ui
 - MongoDB
 
 
@@ -21,6 +20,7 @@ This is book library site.User can borrow book for reading. If they complete rea
 - User can add own book
 - User will have personal borrow list of his/her addition
 - Slider with valuable information
+- User can add Book Category dynamically
 - 
 ## If you want to run this project in your device
 - clone the repo.
