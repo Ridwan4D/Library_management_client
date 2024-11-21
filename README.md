@@ -21,7 +21,7 @@ This is book library site.User can borrow book for reading. If they complete rea
 - User will have personal borrow list of his/her addition
 - Slider with valuable information
 - User can add Book Category dynamically
-- 
+  
 ## If you want to run this project in your device
 - clone the repo.
 - also clone the backend repo.
